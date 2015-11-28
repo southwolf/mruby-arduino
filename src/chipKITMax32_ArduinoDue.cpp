@@ -16,11 +16,11 @@
 	#include <WProgram.h>
 #endif
 
-#if defined(__SAM3X8E__)  //Arduino IDE
-#include <Servo.h>
-#else
-#include <Servo/Servo.h>
-#endif
+// #if defined(__SAM3X8E__)  //Arduino IDE
+// #include <Servo.h>
+// #else
+// #include <Servo/Servo.h>
+// #endif
 
 mrb_value mrb_serial_available(mrb_state *mrb, mrb_value self){
   return mrb_fixnum_value(Serial.available());
@@ -44,44 +44,44 @@ mrb_value mrb_serial_println(mrb_state *mrb, mrb_value self){
   return mrb_nil_value();
 }
 
-void mrb_servo_free(mrb_state *mrb, void *ptr){
-  Servo *servo = (Servo *)ptr;
-  servo->~Servo();
-  mrb_free(mrb, servo);
-}
+// void mrb_servo_free(mrb_state *mrb, void *ptr){
+//   Servo *servo = (Servo *)ptr;
+//   servo->~Servo();
+//   mrb_free(mrb, servo);
+// }
 
-struct mrb_data_type mrb_servo_type = {"Servo", mrb_servo_free};
+// struct mrb_data_type mrb_servo_type = {"Servo", mrb_servo_free};
 
-mrb_value mrb_servo_initialize(mrb_state *mrb, mrb_value self){
-  void *p = mrb_malloc(mrb, sizeof(Servo));
-  Servo *newServo = new(p) Servo();
-  DATA_PTR(self) = newServo;  
-  DATA_TYPE(self) = &mrb_servo_type;  
-  return self;
-}
+// mrb_value mrb_servo_initialize(mrb_state *mrb, mrb_value self){
+//   void *p = mrb_malloc(mrb, sizeof(Servo));
+//   Servo *newServo = new(p) Servo();
+//   DATA_PTR(self) = newServo;  
+//   DATA_TYPE(self) = &mrb_servo_type;  
+//   return self;
+// }
 
-mrb_value mrb_servo_attach(mrb_state *mrb, mrb_value self){
-  Servo *servo = (Servo *)mrb_get_datatype(mrb, self, &mrb_servo_type);
+// mrb_value mrb_servo_attach(mrb_state *mrb, mrb_value self){
+//   Servo *servo = (Servo *)mrb_get_datatype(mrb, self, &mrb_servo_type);
   
-  mrb_int pin = 0;
-  mrb_get_args(mrb, "i", &pin);
-  servo->attach(pin);
-  return mrb_nil_value();
-}
+//   mrb_int pin = 0;
+//   mrb_get_args(mrb, "i", &pin);
+//   servo->attach(pin);
+//   return mrb_nil_value();
+// }
 
-mrb_value mrb_servo_write(mrb_state *mrb, mrb_value self){
-  Servo *servo = (Servo *)mrb_get_datatype(mrb, self, &mrb_servo_type);
-  mrb_int angle = 0;
-  mrb_get_args(mrb, "i", &angle);
-  servo->write(angle);
-  return mrb_nil_value();
-}
+// mrb_value mrb_servo_write(mrb_state *mrb, mrb_value self){
+//   Servo *servo = (Servo *)mrb_get_datatype(mrb, self, &mrb_servo_type);
+//   mrb_int angle = 0;
+//   mrb_get_args(mrb, "i", &angle);
+//   servo->write(angle);
+//   return mrb_nil_value();
+// }
 
-mrb_value mrb_servo_detach(mrb_state *mrb, mrb_value self){
-  Servo *servo = (Servo *)mrb_get_datatype(mrb, self, &mrb_servo_type);
-  servo->detach();
-  return mrb_nil_value();
-}
+// mrb_value mrb_servo_detach(mrb_state *mrb, mrb_value self){
+//   Servo *servo = (Servo *)mrb_get_datatype(mrb, self, &mrb_servo_type);
+//   servo->detach();
+//   return mrb_nil_value();
+// }
 
 
 mrb_value mrb_arduino_pinMode(mrb_state *mrb, mrb_value self){
@@ -251,12 +251,12 @@ mruby_arduino_init_chipKIT_or_Due(mrb_state* mrb) {
   mrb_define_class_method(mrb, serialClass, "begin",mrb_serial_begin, MRB_ARGS_REQ(1));
   mrb_define_class_method(mrb, serialClass, "println", mrb_serial_println, MRB_ARGS_REQ(1));
 
-  RClass *servoClass = mrb_define_class(mrb, "Servo", mrb->object_class);
-  MRB_SET_INSTANCE_TT(servoClass, MRB_TT_DATA);
-  mrb_define_method(mrb, servoClass, "initialize", mrb_servo_initialize, MRB_ARGS_NONE());
-  mrb_define_method(mrb, servoClass, "attach", mrb_servo_attach, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, servoClass, "write", mrb_servo_write, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, servoClass, "detach", mrb_servo_detach, MRB_ARGS_NONE());
+  // RClass *servoClass = mrb_define_class(mrb, "Servo", mrb->object_class);
+  // MRB_SET_INSTANCE_TT(servoClass, MRB_TT_DATA);
+  // mrb_define_method(mrb, servoClass, "initialize", mrb_servo_initialize, MRB_ARGS_NONE());
+  // mrb_define_method(mrb, servoClass, "attach", mrb_servo_attach, MRB_ARGS_REQ(1));
+  // mrb_define_method(mrb, servoClass, "write", mrb_servo_write, MRB_ARGS_REQ(1));
+  // mrb_define_method(mrb, servoClass, "detach", mrb_servo_detach, MRB_ARGS_NONE());
   
   RClass *arduinoModule = mrb_define_module(mrb, "Arduino");
   mrb_define_module_function(mrb, arduinoModule, "pinMode", mrb_arduino_pinMode, MRB_ARGS_REQ(2));
