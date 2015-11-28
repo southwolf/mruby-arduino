@@ -172,32 +172,32 @@ void
 mruby_arduino_init_galileo(mrb_state* mrb) {
 
   RClass *serialClass = mrb_define_class(mrb, "Serial", mrb->object_class);
-  mrb_define_class_method(mrb, serialClass, "available", mrb_serial_available, ARGS_NONE());
-  mrb_define_class_method(mrb, serialClass, "begin",mrb_serial_begin, ARGS_REQ(1));
-  mrb_define_class_method(mrb, serialClass, "println", mrb_serial_println, ARGS_REQ(1));
+  mrb_define_class_method(mrb, serialClass, "available", mrb_serial_available, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb, serialClass, "begin",mrb_serial_begin, MRB_ARGS_REQ(1));
+  mrb_define_class_method(mrb, serialClass, "println", mrb_serial_println, MRB_ARGS_REQ(1));
 
 #ifdef MRUBY_ARDUINO_GALILEO_ENABLE_SERVO
   RClass *servoClass = mrb_define_class(mrb, "Servo", mrb->object_class);
   MRB_SET_INSTANCE_TT(servoClass, MRB_TT_DATA);
-  mrb_define_method(mrb, servoClass, "initialize", mrb_servo_initialize, ARGS_NONE());
-  mrb_define_method(mrb, servoClass, "attach", mrb_servo_attach, ARGS_REQ(1));
-  mrb_define_method(mrb, servoClass, "write", mrb_servo_write, ARGS_REQ(1));
-  mrb_define_method(mrb, servoClass, "detach", mrb_servo_detach, ARGS_NONE());
+  mrb_define_method(mrb, servoClass, "initialize", mrb_servo_initialize, MRB_ARGS_NONE());
+  mrb_define_method(mrb, servoClass, "attach", mrb_servo_attach, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, servoClass, "write", mrb_servo_write, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, servoClass, "detach", mrb_servo_detach, MRB_ARGS_NONE());
 #endif /*MRUBY_ARDUINO_GALILEO_ENABLE_SERVO*/
   
   RClass *arduinoModule = mrb_define_module(mrb, "Arduino");
-  mrb_define_module_function(mrb, arduinoModule, "pinMode", mrb_arduino_pinMode, ARGS_REQ(2));
-  mrb_define_module_function(mrb, arduinoModule, "digitalWrite", mrb_arduino_digitalWrite, ARGS_REQ(2));
-  mrb_define_module_function(mrb, arduinoModule, "digitalRead", mrb_arduino_digitalRead, ARGS_REQ(1));
-  mrb_define_module_function(mrb, arduinoModule, "analogReference", mrb_arduino_analogReference, ARGS_REQ(1));
-  mrb_define_module_function(mrb, arduinoModule, "analogWrite", mrb_arduino_analogWrite, ARGS_REQ(2));
-  mrb_define_module_function(mrb, arduinoModule, "analogRead", mrb_arduino_analogRead, ARGS_REQ(1));
+  mrb_define_module_function(mrb, arduinoModule, "pinMode", mrb_arduino_pinMode, MRB_ARGS_REQ(2));
+  mrb_define_module_function(mrb, arduinoModule, "digitalWrite", mrb_arduino_digitalWrite, MRB_ARGS_REQ(2));
+  mrb_define_module_function(mrb, arduinoModule, "digitalRead", mrb_arduino_digitalRead, MRB_ARGS_REQ(1));
+  mrb_define_module_function(mrb, arduinoModule, "analogReference", mrb_arduino_analogReference, MRB_ARGS_REQ(1));
+  mrb_define_module_function(mrb, arduinoModule, "analogWrite", mrb_arduino_analogWrite, MRB_ARGS_REQ(2));
+  mrb_define_module_function(mrb, arduinoModule, "analogRead", mrb_arduino_analogRead, MRB_ARGS_REQ(1));
 
-	mrb_define_module_function(mrb, arduinoModule, "millis", mrb_arduino_millis, ARGS_NONE());
-  mrb_define_module_function(mrb, arduinoModule, "micros", mrb_arduino_micros, ARGS_NONE());
-  mrb_define_module_function(mrb, arduinoModule, "delay", mrb_arduino_delay, ARGS_REQ(1));
-  mrb_define_module_function(mrb, arduinoModule, "delayMicroseconds", mrb_arduino_delayMicroseconds, ARGS_REQ(1));
-  mrb_define_module_function(mrb, arduinoModule, "map", mrb_arduino_map, ARGS_REQ(5));
+	mrb_define_module_function(mrb, arduinoModule, "millis", mrb_arduino_millis, MRB_ARGS_NONE());
+  mrb_define_module_function(mrb, arduinoModule, "micros", mrb_arduino_micros, MRB_ARGS_NONE());
+  mrb_define_module_function(mrb, arduinoModule, "delay", mrb_arduino_delay, MRB_ARGS_REQ(1));
+  mrb_define_module_function(mrb, arduinoModule, "delayMicroseconds", mrb_arduino_delayMicroseconds, MRB_ARGS_REQ(1));
+  mrb_define_module_function(mrb, arduinoModule, "map", mrb_arduino_map, MRB_ARGS_REQ(5));
 
   mrb_define_const(mrb, arduinoModule, "HIGH", mrb_fixnum_value(HIGH));
   mrb_define_const(mrb, arduinoModule, "LOW", mrb_fixnum_value(LOW));
